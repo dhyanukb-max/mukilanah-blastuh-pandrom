@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>💥 MUKILANAH BLASTUH PANDROM 💥</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,sans-serif;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;justify-content:center;align-items:center;padding:20px}
+#loading{position:fixed;inset:0;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;z-index:10;text-align:center}
+.loader{width:min(90%,420px)}.loader img{width:260px;max-width:80%;max-height:55vh;object-fit:contain;border-radius:20px}.loader h2{margin:15px 0}.bar{height:7px;background:#333;border-radius:9px;overflow:hidden}.progress{height:100%;background:#fff;animation:load 3s linear forwards}@keyframes load{from{width:0}to{width:100%}}
+.card{display:none;width:min(100%,650px);background:#fff;border-radius:24px;padding:30px;box-shadow:0 20px 50px #0004}.head{text-align:center}.head .emoji{font-size:48px}.head h1{font-size:29px;margin:8px 0}.sub{color:#777}.notice{background:#f3edff;border-left:5px solid #764ba2;padding:12px;border-radius:10px;margin:20px 0;font-size:13px;color:#555}
+label{display:block;font-weight:bold;margin:18px 0 7px}input,select,textarea{width:100%;padding:13px;border:2px solid #e6e6e6;border-radius:11px;font-size:15px;outline:none}textarea{min-height:130px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:#764ba2}button{width:100%;border:0;border-radius:12px;padding:15px;margin-top:20px;background:linear-gradient(135deg,#667eea,#764ba2);color:white;font-weight:bold;font-size:16px;cursor:pointer}.counter{text-align:right;color:#999;font-size:12px;margin-top:4px}.status{text-align:center;margin-top:15px;min-height:20px;color:#666}.success{display:none;text-align:center;padding:20px}.success .big{font-size:55px}
+</style>
+</head>
+<body>
+<div id="loading"><div class="loader">
+<img src="loading.png" alt="Loading">
+<h2 id="msg">Mukilanah blastuh pandrom... 💀</h2>
+<div class="bar"><div class="progress"></div></div>
+<p>Preparing the chaos 💀</p>
+</div></div>
+
+<div class="card" id="app">
+<section id="formSection">
+<div class="head"><div class="emoji">💥</div><h1>MUKILANAH BLASTUH PANDROM</h1><p class="sub">Oru idea irundha sollunga... chaos begins here 😂</p></div>
+<div class="notice">😂 Keep it funny and friendly — no threats, harassment, private information, or genuinely hurtful content.</div>
+<form id="form">
+<label>💡 Your idea / suggestion</label>
+<input id="idea" required placeholder="What's your idea?">
+<label>📝 Name <small>(optional)</small></label>
+<input id="name" placeholder="Anonymous is fine 👻">
+<label>📌 Category</label>
+<select id="category" required>
+<option value="">Choose a category...</option><option>😂 Funny</option><option>🎲 Random</option><option>🚀 Improvement</option><option>🔥 Harmless Roast</option><option>✨ Other</option>
+</select>
+<label>💬 Detailed suggestion</label>
+<textarea id="details" maxlength="500" required placeholder="Tell us more..."></textarea>
+<div class="counter"><span id="count">0</span>/500</div>
+<button id="submit">🚀 Submit Suggestion</button>
+<div class="status" id="status"></div>
+</form>
+</section>
+<section class="success" id="success"><div class="big">🎉</div><h2>Suggestion received!</h2><p>Thanks for contributing to the chaos 😂</p><button type="button" onclick="again()">Submit another</button></section>
+</div>
+
+<script>
+/*
+  IMPORTANT:
+  Paste your deployed Google Apps Script Web App URL below.
+  Example: https://script.google.com/macros/s/XXXXX/exec
+*/
+const SCRIPT_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+
+const msgs=["Mukilanah blastuh pandrom... 💀","Analyzing the situation... 👀","Consulting the council... 🗿","Preparing maximum chaos... 🔥","Almost there da... 😭"];
+let mi=0;
+setInterval(()=>{if(mi<msgs.length-1)document.getElementById("msg").textContent=msgs[++mi]},550);
+setTimeout(()=>{document.getElementById("loading").style.display="none";document.getElementById("app").style.display="block"},3000);
+
+const details=document.getElementById("details");
+details.oninput=()=>document.getElementById("count").textContent=details.value.length;
+
+document.getElementById("form").onsubmit=async e=>{
+ e.preventDefault();
+ const status=document.getElementById("status"), btn=document.getElementById("submit");
+ if(SCRIPT_URL.includes("PASTE_YOUR")){status.textContent="⚠️ The owner still needs to connect the Google Sheet.";return}
+ btn.disabled=true;btn.textContent="Sending... ⏳";status.textContent="";
+ const data={idea:idea.value,name:name.value||"Anonymous",category:category.value,details:details.value};
+ try{
+   const r=await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify(data)});
+   const out=await r.json();
+   if(!out.ok) throw new Error(out.error||"Submission failed");
+   document.getElementById("formSection").style.display="none";
+   document.getElementById("success").style.display="block";
+ }catch(err){status.textContent="❌ Couldn't submit. Please try again.";btn.disabled=false;btn.textContent="🚀 Submit Suggestion"}
+};
+function again(){document.getElementById("success").style.display="none";document.getElementById("formSection").style.display="block";document.getElementById("form").reset();document.getElementById("count").textContent="0";document.getElementById("status").textContent=""}
+</script>
+</body>
+</html>
